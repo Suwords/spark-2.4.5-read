@@ -1055,7 +1055,7 @@ private[deploy] object Master extends Logging {
     Utils.initDaemon(log)
     val conf = new SparkConf
     val args = new MasterArguments(argStrings, conf)
-    // TODO
+    // TODO 启动Master，其中包含了RPC环境
     val (rpcEnv, _, _) = startRpcEnvAndEndpoint(args.host, args.port, args.webUiPort, conf)
     rpcEnv.awaitTermination()
   }
@@ -1072,7 +1072,7 @@ private[deploy] object Master extends Logging {
       webUiPort: Int,
       conf: SparkConf): (RpcEnv, Int, Option[Int]) = {
     val securityMgr = new SecurityManager(conf)
-    // TODO
+    // TODO 创建RpcEnv
     val rpcEnv = RpcEnv.create(SYSTEM_NAME, host, port, conf, securityMgr)
     // TODO
     val masterEndpoint = rpcEnv.setupEndpoint(ENDPOINT_NAME,

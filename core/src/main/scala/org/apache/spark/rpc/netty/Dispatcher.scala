@@ -38,7 +38,7 @@ import org.apache.spark.util.ThreadUtils
  */
 private[netty] class Dispatcher(nettyEnv: NettyRpcEnv, numUsableCores: Int) extends Logging {
 
-  //
+  // 节点对象
   private class EndpointData(
       val name: String,
       val endpoint: RpcEndpoint,
@@ -46,15 +46,15 @@ private[netty] class Dispatcher(nettyEnv: NettyRpcEnv, numUsableCores: Int) exte
     val inbox = new Inbox(ref, endpoint)
   }
 
-  //
+  // 终端 ConcurrentMap
   private val endpoints: ConcurrentMap[String, EndpointData] =
     new ConcurrentHashMap[String, EndpointData]
-  //
+  // 终端引用 ConcurrentMap
   private val endpointRefs: ConcurrentMap[RpcEndpoint, RpcEndpointRef] =
     new ConcurrentHashMap[RpcEndpoint, RpcEndpointRef]
 
   // Track the receivers whose inboxes may contain messages.
-  // TODO
+  // TODO 重要的接收者
   private val receivers = new LinkedBlockingQueue[EndpointData]
 
   /**
